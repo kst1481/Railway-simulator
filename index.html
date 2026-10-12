@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A cozy little railway adventure. Pick a station, catch a train, and collect your Japan rail stamps."
+    />
+    <meta name="theme-color" content="#f5f4ef" />
+    <title>Platform 9 — A little Japan rail adventure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Platform 9 home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 38 38" fill="none">
+              <rect x="2" y="2" width="34" height="34" rx="12" fill="#E45B43" />
+              <path d="M11 26V12h8.2a5.1 5.1 0 0 1 0 10.2H15v3.8h-4Zm4-7.5h3.8a1.5 1.5 0 1 0 0-3H15v3Z" fill="white" />
+              <path d="M24 12h3v14h-3z" fill="#F7D9A8" />
+            </svg>
+          </span>
+          <span class="brand-name">platform <strong>9</strong></span>
+        </a>
+        <div class="topbar-right">
+          <span class="trip-label"><span class="live-dot"></span> YOUR LITTLE RAIL ADVENTURE</span>
+          <button class="reset-button" id="reset-trip" type="button" title="Start a fresh collection">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 8a6.5 6.5 0 1 1 .4 4.3M3 3.5v4.8h4.8" /></svg>
+            Start over
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="welcome-row" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">NO PLANS. JUST TRAINS.</p>
+            <h1 id="page-title">Somewhere, <span>Japan is waiting.</span></h1>
+            <p class="welcome-copy">Pick a station on the map. See where the rails take you.</p>
+          </div>
+          <div class="collection-counter" aria-live="polite">
+            <span class="counter-icon" aria-hidden="true">✳</span>
+            <span><strong id="station-count">01</strong><small>stations found</small></span>
+            <span class="counter-divider"></span>
+            <span><strong id="station-total">14</strong><small>to discover</small></span>
+          </div>
+        </section>
+
+        <section class="explorer" aria-label="Japan rail explorer">
+          <div class="map-card">
+            <div class="map-toolbar">
+              <div class="map-heading">
+                <span class="map-heading-icon" aria-hidden="true">
+                  <svg viewBox="0 0 20 20"><path d="M3 5.5 7 3l6 2.5L17 3v11.5L13 17l-6-2.5L3 17V5.5Z" /><path d="M7 3v11.5M13 5.5V17" /></svg>
+                </span>
+                <div><strong>The rail map</strong><small>A very simplified Japan</small></div>
+              </div>
+              <div class="map-hint"><span class="hint-dot"></span> Your current stop</div>
+            </div>
+            <div class="map-viewport" id="map-viewport">
+              <svg id="rail-map" class="rail-map" viewBox="0 0 780 670" role="img" aria-label="A simplified map of Japan's rail network. Select a connected station to travel.">
+                <defs>
+                  <pattern id="map-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <circle cx="1" cy="1" r="1" fill="#d9e1dc" />
+                  </pattern>
+                  <filter id="station-glow" x="-100%" y="-100%" width="300%" height="300%">
+                    <feGaussianBlur stdDeviation="5" result="blur" />
+                    <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                  </filter>
+                </defs>
+                <rect width="780" height="670" fill="url(#map-dots)" />
+                <g class="islands" aria-hidden="true">
+                  <path d="M557 55c26-15 55-7 72 9 13 13 8 24-4 36-9 9-23 11-31 23-13 19-34 16-46 3-12-13-20-37-7-54 4-6 9-12 16-17Z" />
+                  <path d="M540 137c16-12 36-8 45 2 9 9 7 22-3 32-9 9-24 12-33 7-12-6-20-28-9-41Z" />
+                  <path d="M526 197c15-9 30-4 35 9 5 12-1 27-12 36-11 8-25 4-31-9-6-13-4-28 8-36Z" />
+                  <path d="M504 243c12-5 23 2 24 13 2 12-6 22-15 25-10 3-19-5-20-15-1-10 3-19 11-23Z" />
+                  <path d="M489 282c11-4 21 3 20 13-1 10-8 18-16 18-9 0-14-9-12-18 1-6 3-11 8-13Z" />
+                  <path d="M467 322c8-5 17 0 17 8 0 8-5 14-12 15-7 0-11-7-10-13 0-4 2-8 5-10Z" />
+                  <path d="M447 356c7-4 14 0 14 7 0 6-5 12-10 12-6 0-10-5-9-11 0-4 2-6 5-8Z" />
+                  <path d="M426 384c9-4 20 3 19 12-1 9-11 16-20 13-9-2-12-13-6-20 2-2 4-4 7-5Z" />
+                  <path d="M388 414c17-7 38 1 43 17 5 14-5 25-20 31-17 7-33 0-38-13-5-14 1-29 15-35Z" />
+                  <path d="M358 457c10-5 22 0 22 9 0 10-10 17-19 14-9-2-12-14-5-20l2-3Z" />
+                  <path d="M324 489c10-4 20 2 18 11-2 9-11 15-20 12-8-3-9-14-2-20l4-3Z" />
+                  <path d="M276 525c11-5 22 2 21 11-1 10-12 16-20 13-9-3-10-14-3-20l2-4Z" />
+                  <path d="M224 555c10-4 19 3 16 12-3 10-15 14-22 8-6-5-3-15 6-20Z" />
+                  <path d="M184 575c8-4 16 1 15 9-1 7-8 12-15 10-8-3-8-14 0-19Z" />
+                </g>
+                <g id="route-layer" aria-hidden="true"></g>
+                <g id="station-layer"></g>
+              </svg>
+              <div class="map-compass" aria-hidden="true"><span>N</span><svg viewBox="0 0 20 24"><path d="m10 1 8 21-8-5-8 5L10 1Z" /></svg></div>
+            </div>
+            <div class="map-legend" aria-label="Rail line legend">
+              <span><i class="legend-swatch swatch-coral"></i> Tokaido</span>
+              <span><i class="legend-swatch swatch-blue"></i> Tohoku</span>
+              <span><i class="legend-swatch swatch-violet"></i> Hokuriku</span>
+              <span><i class="legend-swatch swatch-gold"></i> Hokkaido</span>
+              <span><i class="legend-swatch swatch-green"></i> Sanyo &amp; Kyushu</span>
+            </div>
+          </div>
+
+          <aside class="station-panel" aria-label="Station details">
+            <div class="panel-topline"><span id="panel-kicker">YOUR STATION</span><span class="station-number" id="station-number">01 / 15</span></div>
+            <div class="station-details" id="station-details"></div>
+            <div class="panel-rule"></div>
+            <div class="connections-heading">
+              <div><p class="eyebrow" id="connection-origin">FROM TOKYO</p><h2>Next stops</h2></div>
+              <span class="connection-count" id="connection-count">—</span>
+            </div>
+            <div class="connections-list" id="connections-list"></div>
+            <div class="no-connections" id="no-connections" hidden>
+              <span class="no-trains-icon" aria-hidden="true">↗</span>
+              <p>End of the line.<br />Every great ride turns around.</p>
+            </div>
+            <div class="panel-footnote">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.2" /><path d="M10 9v4M10 6.2v.2" /></svg>
+              <span>A little pretend, a little adventure. Times &amp; routes aren't real.</span>
+            </div>
+          </aside>
+        </section>
+
+        <section class="stamps-section" aria-labelledby="stamps-title">
+          <div class="stamps-heading">
+            <div><p class="eyebrow">LITTLE MEMORIES</p><h2 id="stamps-title">Your station stamps <span id="stamp-subtitle">— start anywhere</span></h2></div>
+            <span class="stamp-count" id="stamp-count">1 / 15 COLLECTED</span>
+          </div>
+          <div class="stamp-strip" id="stamp-strip" aria-live="polite"></div>
+        </section>
+
+        <footer class="footer">
+          <span><span class="footer-train" aria-hidden="true">▰</span> Made for the joy of the journey.</span>
+          <span>15 stations · one little adventure</span>
+        </footer>
+      </main>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <dialog class="reset-dialog" id="reset-dialog" aria-labelledby="reset-title">
+        <div class="dialog-icon" aria-hidden="true">↺</div>
+        <h2 id="reset-title">A fresh ticket?</h2>
+        <p>Your station stamps will be cleared and you'll head back to Tokyo.</p>
+        <div class="dialog-actions">
+          <button class="dialog-cancel" id="cancel-reset" type="button">Keep exploring</button>
+          <button class="dialog-confirm" id="confirm-reset" type="button">Start fresh</button>
+        </div>
+      </dialog>
+    </div>
+  </body>
+</html>

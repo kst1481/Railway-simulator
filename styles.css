@@ -1,0 +1,248 @@
+:root {
+  color-scheme: light;
+  --ink: #263c3b;
+  --muted: #86918c;
+  --soft-muted: #a6aeaa;
+  --paper: #f5f4ef;
+  --panel: #fffefa;
+  --line: #e8e9e2;
+  --coral: #e45b43;
+  --coral-soft: #fff0e9;
+  --teal: #3d7970;
+  --shadow: 0 8px 32px rgb(39 57 53 / 5%);
+  font-family: "DM Sans", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 9% 18%, rgb(226 236 225 / 26%), transparent 26rem),
+    var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, a { font: inherit; }
+button { color: inherit; }
+button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible {
+  outline: 3px solid rgb(228 91 67 / 65%);
+  outline-offset: 4px;
+}
+
+.app-shell { max-width: 1440px; margin: 0 auto; padding: 0 54px 34px; }
+.topbar {
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e7df;
+}
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; }
+.brand-mark { display: inline-flex; width: 38px; height: 38px; }
+.brand-mark svg { width: 100%; height: 100%; }
+.brand-name { font: 600 17px/1 "Manrope", sans-serif; letter-spacing: -0.7px; }
+.brand-name strong { color: var(--coral); font-weight: 800; }
+.topbar-right { display: flex; align-items: center; gap: 22px; }
+.trip-label { display: flex; align-items: center; gap: 8px; color: #838c87; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: #63a38a; box-shadow: 0 0 0 3px #63a38a1c; }
+.reset-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border: 1px solid #e2e3dc;
+  border-radius: 8px;
+  background: #fbfaf6;
+  color: #65736e;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  transition: border-color .2s, background .2s, color .2s;
+}
+.reset-button:hover { border-color: #e9b5a8; background: white; color: var(--coral); }
+.reset-button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+main { padding-top: 39px; }
+.welcome-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 24px; }
+.eyebrow { margin: 0 0 8px; color: #b07862; font-size: 9px; font-weight: 700; letter-spacing: 1.4px; }
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: 7px; font: 700 clamp(25px, 3vw, 33px)/1.2 "Manrope", sans-serif; letter-spacing: -1.5px; }
+h1 span { color: var(--coral); }
+.welcome-copy { margin: 0; color: #818b86; font-size: 12px; }
+.collection-counter { display: flex; align-items: center; gap: 11px; padding: 11px 15px; border: 1px solid #e9e7de; border-radius: 10px; background: #fbfaf6; }
+.counter-icon { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 9px; background: var(--coral-soft); color: var(--coral); font-size: 16px; }
+.collection-counter > span:not(.counter-icon, .counter-divider) { display: flex; flex-direction: column; gap: 1px; }
+.collection-counter strong { font: 700 14px "Manrope", sans-serif; }
+.collection-counter small { color: #939b96; font-size: 9px; }
+.counter-divider { width: 1px; height: 28px; margin: 0 2px; background: #e6e5dd; }
+
+.explorer { display: grid; grid-template-columns: minmax(0, 1fr) 316px; align-items: stretch; gap: 15px; }
+.map-card, .station-panel { overflow: hidden; border: 1px solid #e9e9e2; border-radius: 13px; background: var(--panel); box-shadow: var(--shadow); }
+.map-card { min-width: 0; display: flex; flex-direction: column; }
+.map-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 17px 20px 14px; }
+.map-heading { display: flex; align-items: center; gap: 10px; }
+.map-heading-icon { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #e6e9df; border-radius: 10px; background: #f7f8f2; color: #688b7d; }
+.map-heading-icon svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.map-heading div { display: grid; gap: 2px; }
+.map-heading strong { font-size: 11px; font-weight: 700; }
+.map-heading small { color: #929a94; font-size: 9px; }
+.map-hint { display: flex; align-items: center; gap: 7px; color: #87928c; font-size: 9px; }
+.hint-dot { width: 8px; height: 8px; border: 2px solid #fff; border-radius: 50%; background: var(--coral); box-shadow: 0 0 0 1px var(--coral); }
+.map-viewport { position: relative; min-height: 345px; flex: 1; overflow: hidden; background: linear-gradient(155deg, #f8faf5 4%, #f1f6f1 90%); }
+.rail-map { display: block; width: 100%; height: 100%; min-height: 345px; }
+.islands path { fill: #e6eee5; stroke: #dce7dc; stroke-width: 1.1; }
+.map-compass { position: absolute; top: 18px; right: 20px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8c9b90; font-size: 8px; font-weight: 700; }
+.map-compass svg { width: 11px; height: 15px; fill: #9cb2a0; }
+.map-legend { display: flex; flex-wrap: wrap; gap: 9px 16px; padding: 12px 19px 14px; border-top: 1px solid #f0f0eb; color: #7f8b85; font-size: 8px; }
+.map-legend span { display: flex; align-items: center; gap: 6px; }
+.legend-swatch { width: 13px; height: 4px; border-radius: 4px; }
+.swatch-coral { background: #e77c66; }
+.swatch-blue { background: #77a2bb; }
+.swatch-violet { background: #9a87b1; }
+.swatch-gold { background: #d9ad62; }
+.swatch-green { background: #74a28c; }
+
+.route-line { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; opacity: .46; transition: opacity .25s, stroke-width .25s; }
+.route-line.is-last-ride { opacity: .95; stroke-width: 5; }
+.route-line.is-option { opacity: .9; stroke-width: 5; }
+.route-station-line { fill: none; stroke: white; stroke-width: 1; stroke-dasharray: 1 5; opacity: .65; }
+.station-node { cursor: pointer; outline: none; }
+.station-node .node-hit { fill: transparent; }
+.station-node .node-halo { fill: none; stroke: #8ca69b; stroke-width: 1.5; opacity: 0; transition: opacity .2s, r .2s; }
+.station-node.is-current .node-halo { fill: #e45b4324; stroke: #e45b43; stroke-width: 1.5; opacity: 1; }
+.station-node.is-current .node-core { fill: #e45b43; stroke: white; stroke-width: 2.5; filter: url(#station-glow); }
+.station-node.is-visited:not(.is-current) .node-core { fill: #fffefa; stroke: #e45b43; stroke-width: 2; }
+.station-node.is-reachable .node-halo { stroke: #749b89; opacity: .8; }
+.station-node.is-reachable .node-core { fill: #fffefa; stroke: #578575; stroke-width: 2; }
+.station-node.is-selected .node-halo { stroke: #e49b58; opacity: 1; stroke-dasharray: 3 3; }
+.station-node.is-selected .node-core { fill: #edb878; stroke: white; stroke-width: 2; }
+.station-node .node-core { fill: #fffefa; stroke: #afbbb2; stroke-width: 1.5; transition: all .2s; }
+.station-node:hover .node-halo, .station-node:focus-visible .node-halo { opacity: 1; }
+.station-node:hover .node-core { stroke: #50786e; stroke-width: 2.5; }
+.station-label { fill: #677972; font-family: "DM Sans", sans-serif; font-size: 9px; font-weight: 600; pointer-events: none; paint-order: stroke; stroke: #f5f8f3; stroke-linejoin: round; stroke-width: 3px; }
+.station-node.is-current .station-label { fill: #c34b37; font-weight: 700; }
+.station-label-jp { fill: #98a39c; font-family: sans-serif; font-size: 7px; font-weight: 500; pointer-events: none; }
+.route-endpoint { fill: #fffefa; stroke: #5c8978; stroke-width: 2.2; }
+
+.station-panel { display: flex; min-height: 441px; flex-direction: column; padding: 19px 18px 13px; }
+.panel-topline { display: flex; justify-content: space-between; align-items: center; color: #a57b66; font-size: 8px; font-weight: 700; letter-spacing: 1.2px; }
+.station-number { color: #a0a8a1; font-size: 9px; font-weight: 600; letter-spacing: .4px; }
+.station-details { min-height: 122px; padding: 21px 0 17px; }
+.station-region { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; color: #82928a; font-size: 9px; }
+.region-pin { display: inline-grid; width: 19px; height: 19px; place-items: center; border-radius: 6px; background: #eff3ed; color: #6e9280; font-size: 10px; }
+.station-name { margin: 0; font: 700 25px/1.1 "Manrope", sans-serif; letter-spacing: -1px; }
+.station-japanese { margin: 4px 0 9px; color: #adb4ae; font-family: sans-serif; font-size: 11px; }
+.stamp-status { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 20px; background: #f1f5ee; color: #668673; font-size: 8px; font-weight: 600; }
+.stamp-status.is-new { background: #fff2e9; color: #c47a50; }
+.stamp-status svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.selected-ride-action { display: flex; width: 100%; align-items: center; justify-content: space-between; margin-top: 10px; padding: 9px 11px; border: 0; border-radius: 8px; background: #e45b43; color: white; cursor: pointer; font-size: 10px; font-weight: 700; transition: background .2s; }
+.selected-ride-action:hover { background: #cd4f3a; }
+.selected-ride-action span { font-size: 14px; }
+.panel-rule { border-top: 1px solid #eeefe9; }
+.connections-heading { display: flex; align-items: flex-end; justify-content: space-between; padding: 17px 0 12px; }
+.connections-heading .eyebrow { margin-bottom: 4px; font-size: 8px; }
+.connections-heading h2 { margin: 0; font: 700 16px "Manrope", sans-serif; letter-spacing: -.5px; }
+.connection-count { display: grid; min-width: 23px; height: 23px; padding: 0 6px; place-items: center; border-radius: 7px; background: #f2f4ef; color: #718379; font-size: 9px; font-weight: 700; }
+.connections-list { display: grid; gap: 7px; }
+.connection-card { display: flex; align-items: center; gap: 9px; min-height: 55px; padding: 8px; border: 1px solid #eeefe8; border-radius: 9px; background: #fffefa; transition: border-color .2s, background .2s, transform .2s; }
+.connection-card:hover { transform: translateY(-1px); border-color: #d6e1d8; background: #fbfcf8; }
+.connection-icon { display: grid; width: 32px; height: 32px; flex: 0 0 auto; place-items: center; border-radius: 9px; background: #f1f5ee; color: #598273; font-size: 14px; }
+.connection-info { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 3px; }
+.connection-info strong { overflow: hidden; color: #354a46; font-size: 10px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.connection-info small { color: #99a19c; font-size: 8px; }
+.ride-button { display: inline-flex; align-items: center; gap: 4px; padding: 7px 8px; border: 0; border-radius: 7px; background: #f9eee8; color: #ce634b; cursor: pointer; font-size: 8px; font-weight: 700; transition: background .2s; }
+.ride-button:hover { background: #f7dfd4; }
+.ride-button span { font-size: 11px; }
+.no-connections { min-height: 111px; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #96a19a; text-align: center; }
+.no-connections:not([hidden]) { display: flex; }
+.no-trains-icon { display: grid; width: 33px; height: 33px; place-items: center; border-radius: 50%; background: #f1f4ee; color: #779686; font-size: 15px; }
+.no-connections p { margin: 0; font-size: 9px; line-height: 1.6; }
+.panel-footnote { display: flex; align-items: flex-start; gap: 6px; margin-top: auto; padding-top: 13px; color: #a1a7a0; font-size: 8px; line-height: 1.5; }
+.panel-footnote svg { width: 13px; height: 13px; flex: 0 0 auto; fill: none; stroke: #99aa9d; stroke-width: 1.3; stroke-linecap: round; }
+
+.stamps-section { margin-top: 24px; padding: 18px 20px 16px; border: 1px solid #e9e9e2; border-radius: 13px; background: #fffefa; box-shadow: var(--shadow); }
+.stamps-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 15px; margin-bottom: 14px; }
+.stamps-heading .eyebrow { margin-bottom: 4px; font-size: 8px; }
+.stamps-heading h2 { margin: 0; font: 700 15px "Manrope", sans-serif; letter-spacing: -.5px; }
+.stamps-heading h2 span { color: #a2aaa4; font: 400 9px "DM Sans", sans-serif; letter-spacing: 0; }
+.stamp-count { color: #9aa49d; font-size: 8px; font-weight: 700; letter-spacing: .8px; }
+.stamp-strip { display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); gap: 7px; }
+.stamp-card { display: flex; min-width: 0; height: 61px; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 1px dashed #e7e9e1; border-radius: 8px; background: #fcfcf8; color: #aeb7af; }
+.stamp-card.is-found { border: 1px solid #ead8c9; background: #fff6ee; color: #c87958; }
+.stamp-card.is-current { border-color: #e7a58e; background: #fff0e9; box-shadow: inset 0 0 0 1px #e7a58e55; }
+.stamp-symbol { display: grid; width: 20px; height: 20px; place-items: center; border: 1px solid currentColor; border-radius: 50%; font-family: sans-serif; font-size: 10px; opacity: .62; }
+.stamp-card.is-found .stamp-symbol { opacity: 1; }
+.stamp-card small { overflow: hidden; width: 100%; padding: 0 3px; font-size: 7px; font-weight: 600; text-align: center; text-overflow: ellipsis; white-space: nowrap; }
+.stamp-card:not(.is-found) small { color: #b5bcb6; }
+.stamp-strip.is-empty .stamp-card { background: #fafaf6; }
+.footer { display: flex; justify-content: space-between; padding: 16px 3px 0; color: #a4aba5; font-size: 9px; }
+.footer-train { margin-right: 5px; color: #d8836a; }
+
+.toast { position: fixed; z-index: 5; right: 24px; bottom: 22px; max-width: min(380px, calc(100vw - 32px)); padding: 12px 16px; transform: translateY(15px); border: 1px solid #e8ded1; border-radius: 10px; background: #fffefa; box-shadow: 0 8px 28px #263c3b20; color: #536660; font-size: 11px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+.toast.is-visible { transform: translateY(0); opacity: 1; }
+.reset-dialog { width: min(370px, calc(100vw - 32px)); padding: 27px; border: 1px solid #ece8df; border-radius: 16px; background: #fffefa; box-shadow: 0 18px 70px #25383330; color: var(--ink); }
+.reset-dialog::backdrop { background: #24373266; backdrop-filter: blur(3px); }
+.dialog-icon { display: grid; width: 40px; height: 40px; margin-bottom: 18px; place-items: center; border-radius: 12px; background: var(--coral-soft); color: var(--coral); font-size: 22px; }
+.reset-dialog h2 { margin-bottom: 7px; font: 700 20px "Manrope", sans-serif; letter-spacing: -.7px; }
+.reset-dialog p { margin-bottom: 21px; color: #88938c; font-size: 12px; line-height: 1.6; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.dialog-actions button { padding: 9px 12px; border-radius: 8px; cursor: pointer; font-size: 10px; font-weight: 700; }
+.dialog-cancel { border: 1px solid #e7e9e1; background: #fffefa; color: #77837c; }
+.dialog-confirm { border: 1px solid var(--coral); background: var(--coral); color: white; }
+
+@media (min-width: 1300px) {
+  .explorer { grid-template-columns: minmax(0, 1fr) 330px; }
+  .map-viewport, .rail-map { min-height: 420px; }
+  .station-panel { min-height: 516px; padding: 22px 20px 15px; }
+  .station-details { min-height: 145px; }
+}
+
+@media (max-width: 1000px) {
+  .app-shell { padding-right: 28px; padding-left: 28px; }
+  .explorer { grid-template-columns: minmax(0, 1fr) 290px; gap: 11px; }
+  .map-viewport, .rail-map { min-height: 370px; }
+  .stamp-strip { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .app-shell { padding: 0 17px 24px; }
+  .topbar { height: 68px; }
+  .topbar-right { gap: 10px; }
+  .trip-label { max-width: 120px; font-size: 7px; line-height: 1.5; letter-spacing: .8px; }
+  .reset-button { padding: 8px; font-size: 0; }
+  .reset-button svg { width: 17px; height: 17px; }
+  main { padding-top: 29px; }
+  .welcome-row { align-items: flex-start; flex-direction: column; margin-bottom: 17px; }
+  h1 { font-size: clamp(24px, 6vw, 31px); }
+  .collection-counter { align-self: flex-start; padding: 8px 11px; }
+  .explorer { grid-template-columns: 1fr; }
+  .map-viewport, .rail-map { min-height: clamp(300px, 84vw, 430px); }
+  .station-panel { min-height: auto; }
+  .station-details { min-height: 122px; }
+  .panel-footnote { margin-top: 15px; }
+  .stamps-section { margin-top: 16px; padding: 15px 13px; }
+  .stamp-strip { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .stamp-card { height: 57px; }
+  .footer { gap: 10px; font-size: 8px; }
+}
+
+@media (max-width: 420px) {
+  .app-shell { padding-right: 12px; padding-left: 12px; }
+  .brand-name { font-size: 15px; }
+  .trip-label { max-width: 93px; font-size: 6px; }
+  .welcome-copy { font-size: 11px; }
+  .map-toolbar { padding-right: 13px; padding-left: 13px; }
+  .map-legend { gap: 8px 12px; padding-right: 13px; padding-left: 13px; }
+  .map-legend span { font-size: 7px; }
+  .stamp-count { font-size: 7px; letter-spacing: .4px; }
+  .stamps-heading h2 { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}

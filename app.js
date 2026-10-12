@@ -1,330 +1,489 @@
+const lineCatalog = [
+  { id: "yamanote", name: "JR Yamanote", color: "#80bd8a", tag: "JR" },
+  { id: "chuo", name: "JR Chuo", color: "#e97b62", tag: "JR" },
+  { id: "ginza", name: "Ginza Line", color: "#e1ae62", tag: "METRO" },
+  { id: "marunouchi", name: "Marunouchi", color: "#dc796f", tag: "METRO" },
+];
+
 const stations = [
-  { id: "sapporo", name: "Sapporo", japanese: "札幌", region: "Hokkaido", x: 572, y: 91, label: [-21, -17], lines: ["Hokkaido"], mark: "雪", accent: "#d9ad62" },
-  { id: "hakodate", name: "Shin-Hakodate", japanese: "新函館北斗", region: "Hokkaido", x: 552, y: 183, label: [-78, 6], lines: ["Hokkaido"], mark: "海", accent: "#d9ad62" },
-  { id: "aomori", name: "Shin-Aomori", japanese: "新青森", region: "Tohoku", x: 523, y: 255, label: [-79, -10], lines: ["Tohoku", "Hokkaido"], mark: "森", accent: "#77a2bb" },
-  { id: "sendai", name: "Sendai", japanese: "仙台", region: "Tohoku", x: 535, y: 348, label: [12, 4], lines: ["Tohoku"], mark: "杜", accent: "#77a2bb" },
-  { id: "tokyo", name: "Tokyo", japanese: "東京", region: "Kanto", x: 503, y: 454, label: [12, -1], lines: ["Tokaido", "Tohoku", "Hokuriku"], mark: "東", accent: "#e77c66" },
-  { id: "nagano", name: "Nagano", japanese: "長野", region: "Chubu", x: 419, y: 448, label: [-48, -10], lines: ["Hokuriku"], mark: "山", accent: "#9a87b1" },
-  { id: "kanazawa", name: "Kanazawa", japanese: "金沢", region: "Hokuriku", x: 332, y: 429, label: [-53, -11], lines: ["Hokuriku"], mark: "金", accent: "#9a87b1" },
-  { id: "nagoya", name: "Nagoya", japanese: "名古屋", region: "Chubu", x: 443, y: 518, label: [12, 3], lines: ["Tokaido"], mark: "喫", accent: "#e77c66" },
-  { id: "kyoto", name: "Kyoto", japanese: "京都", region: "Kansai", x: 371, y: 553, label: [-46, -15], lines: ["Tokaido", "Hokuriku"], mark: "京", accent: "#e77c66" },
-  { id: "osaka", name: "Osaka", japanese: "新大阪", region: "Kansai", x: 357, y: 585, label: [-47, 12], lines: ["Sanyo"], mark: "食", accent: "#74a28c" },
-  { id: "hiroshima", name: "Hiroshima", japanese: "広島", region: "Chugoku", x: 253, y: 584, label: [-58, -12], lines: ["Sanyo"], mark: "鳥", accent: "#74a28c" },
-  { id: "hakata", name: "Hakata", japanese: "博多", region: "Kyushu", x: 169, y: 588, label: [-12, -17], lines: ["Sanyo", "Kyushu"], mark: "祭", accent: "#74a28c" },
-  { id: "kumamoto", name: "Kumamoto", japanese: "熊本", region: "Kyushu", x: 170, y: 630, label: [-66, 4], lines: ["Kyushu"], mark: "城", accent: "#74a28c" },
-  { id: "kagoshima", name: "Kagoshima", japanese: "鹿児島中央", region: "Kyushu", x: 193, y: 666, label: [12, 3], lines: ["Kyushu"], mark: "桜", accent: "#74a28c" },
-  { id: "ueno", name: "Ueno", japanese: "上野", region: "Tokyo", x: 515, y: 437, label: [12, -7], lines: ["Tohoku"], mark: "🐼", accent: "#77a2bb" },
+  { id: "tokyo", name: "Tokyo", jp: "東京", x: 201, y: 326, lines: ["yamanote", "chuo", "marunouchi"] },
+  { id: "yurakucho", name: "Yurakucho", jp: "有楽町", x: 226, y: 350, lines: ["yamanote"] },
+  { id: "shimbashi", name: "Shimbashi", jp: "新橋", x: 246, y: 376, lines: ["yamanote", "ginza"] },
+  { id: "hamamatsucho", name: "Hamamatsucho", jp: "浜松町", x: 245, y: 404, lines: ["yamanote"] },
+  { id: "shinagawa", name: "Shinagawa", jp: "品川", x: 229, y: 438, lines: ["yamanote"] },
+  { id: "shibuya", name: "Shibuya", jp: "渋谷", x: 142, y: 402, lines: ["yamanote", "ginza"] },
+  { id: "shinjuku", name: "Shinjuku", jp: "新宿", x: 139, y: 328, lines: ["yamanote", "chuo", "marunouchi"] },
+  { id: "ikebukuro", name: "Ikebukuro", jp: "池袋", x: 143, y: 238, lines: ["yamanote", "marunouchi"] },
+  { id: "nippori", name: "Nippori", jp: "日暮里", x: 220, y: 194, lines: ["yamanote"] },
+  { id: "ueno", name: "Ueno", jp: "上野", x: 232, y: 222, lines: ["yamanote", "ginza"] },
+  { id: "akihabara", name: "Akihabara", jp: "秋葉原", x: 222, y: 266, lines: ["yamanote"] },
+  { id: "kanda", name: "Kanda", jp: "神田", x: 208, y: 297, lines: ["yamanote", "chuo"] },
+  { id: "ochanomizu", name: "Ochanomizu", jp: "御茶ノ水", x: 177, y: 280, lines: ["chuo"] },
+  { id: "ginza", name: "Ginza", jp: "銀座", x: 254, y: 334, lines: ["ginza", "marunouchi"] },
+  { id: "omotesando", name: "Omotesando", jp: "表参道", x: 108, y: 373, lines: ["ginza"] },
+  { id: "akasaka", name: "Akasaka-mitsuke", jp: "赤坂見附", x: 132, y: 348, lines: ["ginza", "marunouchi"] },
 ];
 
 const routes = [
-  { from: "sapporo", to: "hakodate", line: "Hokkaido", color: "#d9ad62", path: "M572 91 Q573 133 552 183" },
-  { from: "hakodate", to: "aomori", line: "Hokkaido", color: "#d9ad62", path: "M552 183 Q526 216 523 255" },
-  { from: "aomori", to: "sendai", line: "Tohoku", color: "#77a2bb", path: "M523 255 Q528 306 535 348" },
-  { from: "sendai", to: "ueno", line: "Tohoku", color: "#77a2bb", path: "M535 348 Q550 390 515 437" },
-  { from: "ueno", to: "tokyo", line: "Tohoku", color: "#77a2bb", path: "M515 437 Q510 445 503 454" },
-  { from: "tokyo", to: "nagoya", line: "Tokaido", color: "#e77c66", path: "M503 454 Q473 488 443 518" },
-  { from: "nagoya", to: "kyoto", line: "Tokaido", color: "#e77c66", path: "M443 518 Q412 543 371 553" },
-  { from: "kyoto", to: "osaka", line: "Tokaido", color: "#e77c66", path: "M371 553 Q355 563 357 585" },
-  { from: "osaka", to: "hiroshima", line: "Sanyo", color: "#74a28c", path: "M357 585 Q306 568 253 584" },
-  { from: "hiroshima", to: "hakata", line: "Sanyo", color: "#74a28c", path: "M253 584 Q211 570 169 588" },
-  { from: "hakata", to: "kumamoto", line: "Kyushu", color: "#74a28c", path: "M169 588 Q178 610 170 630" },
-  { from: "kumamoto", to: "kagoshima", line: "Kyushu", color: "#74a28c", path: "M170 630 Q178 652 193 666" },
-  { from: "tokyo", to: "nagano", line: "Hokuriku", color: "#9a87b1", path: "M503 454 Q467 433 419 448" },
-  { from: "nagano", to: "kanazawa", line: "Hokuriku", color: "#9a87b1", path: "M419 448 Q377 430 332 429" },
-  { from: "kanazawa", to: "kyoto", line: "Hokuriku", color: "#9a87b1", path: "M332 429 Q331 510 371 553" },
+  { id: "yamanote-tokyo-yurakucho", from: "tokyo", to: "yurakucho", line: "yamanote", bend: [219, 327] },
+  { id: "yamanote-yurakucho-shimbashi", from: "yurakucho", to: "shimbashi", line: "yamanote" },
+  { id: "yamanote-shimbashi-hamamatsucho", from: "shimbashi", to: "hamamatsucho", line: "yamanote" },
+  { id: "yamanote-hamamatsucho-shinagawa", from: "hamamatsucho", to: "shinagawa", line: "yamanote", bend: [233, 424] },
+  { id: "yamanote-shinagawa-shibuya", from: "shinagawa", to: "shibuya", line: "yamanote", bend: [188, 440] },
+  { id: "yamanote-shibuya-shinjuku", from: "shibuya", to: "shinjuku", line: "yamanote", bend: [134, 366] },
+  { id: "yamanote-shinjuku-ikebukuro", from: "shinjuku", to: "ikebukuro", line: "yamanote", bend: [127, 282] },
+  { id: "yamanote-ikebukuro-nippori", from: "ikebukuro", to: "nippori", line: "yamanote", bend: [171, 201] },
+  { id: "yamanote-nippori-ueno", from: "nippori", to: "ueno", line: "yamanote" },
+  { id: "yamanote-ueno-akihabara", from: "ueno", to: "akihabara", line: "yamanote" },
+  { id: "yamanote-akihabara-kanda", from: "akihabara", to: "kanda", line: "yamanote" },
+  { id: "yamanote-kanda-tokyo", from: "kanda", to: "tokyo", line: "yamanote" },
+  { id: "chuo-tokyo-kanda", from: "tokyo", to: "kanda", line: "chuo", bend: [211, 318] },
+  { id: "chuo-kanda-ochanomizu", from: "kanda", to: "ochanomizu", line: "chuo" },
+  { id: "chuo-ochanomizu-shinjuku", from: "ochanomizu", to: "shinjuku", line: "chuo", bend: [143, 296] },
+  { id: "ginza-ueno-ginza", from: "ueno", to: "ginza", line: "ginza", bend: [260, 276] },
+  { id: "ginza-ginza-shimbashi", from: "ginza", to: "shimbashi", line: "ginza" },
+  { id: "ginza-ginza-akasaka", from: "ginza", to: "akasaka", line: "ginza", bend: [185, 332] },
+  { id: "ginza-akasaka-omotesando", from: "akasaka", to: "omotesando", line: "ginza" },
+  { id: "ginza-omotesando-shibuya", from: "omotesando", to: "shibuya", line: "ginza", bend: [98, 389] },
+  { id: "marunouchi-tokyo-ginza", from: "tokyo", to: "ginza", line: "marunouchi", bend: [239, 325] },
+  { id: "marunouchi-ginza-akasaka", from: "ginza", to: "akasaka", line: "marunouchi", bend: [191, 324] },
+  { id: "marunouchi-akasaka-shinjuku", from: "akasaka", to: "shinjuku", line: "marunouchi", bend: [125, 337] },
+  { id: "marunouchi-shinjuku-ikebukuro", from: "shinjuku", to: "ikebukuro", line: "marunouchi", bend: [151, 285] },
 ];
 
-const storageKey = "platform9-rail-adventure";
 const stationById = new Map(stations.map((station) => [station.id, station]));
-const neighbors = new Map(stations.map((station) => [station.id, []]));
+const lineById = new Map(lineCatalog.map((line) => [line.id, line]));
+const routeById = new Map(routes.map((route) => [route.id, route]));
+const adjacency = new Map(stations.map((station) => [station.id, []]));
 routes.forEach((route) => {
-  neighbors.get(route.from).push({ stationId: route.to, route });
-  neighbors.get(route.to).push({ stationId: route.from, route });
+  adjacency.get(route.from).push({ stationId: route.to, route });
+  adjacency.get(route.to).push({ stationId: route.from, route });
 });
 
-const routeLayer = document.querySelector("#route-layer");
-const stationLayer = document.querySelector("#station-layer");
-const stationDetails = document.querySelector("#station-details");
-const connectionsList = document.querySelector("#connections-list");
-const stampStrip = document.querySelector("#stamp-strip");
+const player = { stationId: "tokyo", visited: new Set(["tokyo"]), snacks: 0, mood: "A ticket, a little time, and nowhere in particular." };
+const closures = new Map();
+const closureTimers = new Map();
+const eventLog = document.querySelector("#event-log");
 const toast = document.querySelector("#toast");
-const resetDialog = document.querySelector("#reset-dialog");
-let toastTimeout;
-let toastAnnouncementTimer;
+let selectedDestination = null;
+let toastTimer;
+let incidentTimer;
 
-function getSavedJourney() {
-  const initialJourney = { currentId: "tokyo", visited: ["tokyo"], lastRoute: null };
-  try {
-    const saved = localStorage.getItem(storageKey);
-    if (!saved) return initialJourney;
-
-    const parsed = JSON.parse(saved);
-    if (
-      !stationById.has(parsed.currentId) ||
-      !Array.isArray(parsed.visited) ||
-      parsed.visited.some((id) => !stationById.has(id))
-    ) {
-      throw new Error("Saved journey data is not valid.");
-    }
-
-    return {
-      currentId: parsed.currentId,
-      visited: [...new Set([...parsed.visited, parsed.currentId])],
-      lastRoute: routes.find(({ from, to }) =>
-        (from === parsed.lastRoute?.from && to === parsed.lastRoute?.to) ||
-        (from === parsed.lastRoute?.to && to === parsed.lastRoute?.from),
-      ) ?? null,
-    };
-  } catch (error) {
-    const reason = error instanceof Error ? error.message : "Unknown storage error.";
-    window.setTimeout(() => showToast(`We couldn't load your saved trip (${reason}) — starting a fresh one.`), 0);
-    return initialJourney;
-  }
-}
-
-const journey = getSavedJourney();
-let selectedId = null;
-
-function saveJourney() {
-  try {
-    localStorage.setItem(storageKey, JSON.stringify({
-      currentId: journey.currentId,
-      visited: journey.visited,
-      lastRoute: journey.lastRoute ? { from: journey.lastRoute.from, to: journey.lastRoute.to } : null,
-    }));
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function createSvgElement(name, attributes = {}) {
+function makeSvg(name, attributes = {}) {
   const element = document.createElementNS("http://www.w3.org/2000/svg", name);
   Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
   return element;
 }
 
-function renderRoutes() {
-  routeLayer.replaceChildren();
-  const currentNeighbors = new Set(neighbors.get(journey.currentId).map(({ stationId }) => stationId));
+function tokyoParts(date = new Date()) {
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Tokyo",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date).reduce((parts, part) => {
+    if (part.type !== "literal") parts[part.type] = Number(part.value);
+    return parts;
+  }, {});
+}
 
-  routes.forEach((route) => {
-    const isLastRide = route === journey.lastRoute;
-    const isOption = currentNeighbors.has(route.from) || currentNeighbors.has(route.to);
-    const path = createSvgElement("path", {
-      d: route.path,
-      class: `route-line${isLastRide ? " is-last-ride" : ""}${isOption ? " is-option" : ""}`,
-      stroke: route.color,
-    });
-    routeLayer.append(path);
+function formatLogTime(date = new Date()) {
+  const parts = tokyoParts(date);
+  return `${String(parts.hour).padStart(2, "0")}:${String(parts.minute).padStart(2, "0")}`;
+}
 
-    if (isLastRide) {
-      const endpoint = stationById.get(route.to === journey.currentId ? route.from : route.to);
-      routeLayer.append(createSvgElement("circle", {
-        cx: endpoint.x,
-        cy: endpoint.y,
-        r: 4,
-        class: "route-endpoint",
-      }));
-    }
+function updateClock() {
+  const now = new Date();
+  const parts = tokyoParts(now);
+  const hours = parts.hour % 12;
+  const hourDegrees = hours * 30 + parts.minute * 0.5;
+  const minuteDegrees = parts.minute * 6 + parts.second * 0.1;
+  const secondDegrees = parts.second * 6;
+  document.querySelector("#hour-hand").style.transform = `rotate(${hourDegrees}deg)`;
+  document.querySelector("#minute-hand").style.transform = `rotate(${minuteDegrees}deg)`;
+  document.querySelector("#second-hand").style.transform = `rotate(${secondDegrees}deg)`;
+  document.querySelector("#digital-time").textContent = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Tokyo",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).format(now);
+  document.querySelector("#clock-date").textContent = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Tokyo",
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(now).toUpperCase();
+}
+
+function makeClockTicks() {
+  const group = document.querySelector("#clock-ticks");
+  for (let tick = 0; tick < 60; tick += 1) {
+    const angle = tick * 6 * Math.PI / 180;
+    const major = tick % 5 === 0;
+    const inner = major ? 69 : 75;
+    const outer = 79;
+    group.append(makeSvg("line", {
+      x1: 100 + Math.sin(angle) * inner,
+      y1: 100 - Math.cos(angle) * inner,
+      x2: 100 + Math.sin(angle) * outer,
+      y2: 100 - Math.cos(angle) * outer,
+      class: `clock-tick${major ? " is-major" : ""}`,
+    }));
+  }
+}
+
+function routePath(route) {
+  const from = stationById.get(route.from);
+  const to = stationById.get(route.to);
+  return route.bend
+    ? `M${from.x} ${from.y} Q${route.bend[0]} ${route.bend[1]} ${to.x} ${to.y}`
+    : `M${from.x} ${from.y} L${to.x} ${to.y}`;
+}
+
+function isRouteOpen(route) {
+  const expiresAt = closures.get(route.id);
+  if (!expiresAt) return true;
+  if (expiresAt <= Date.now()) {
+    closures.delete(route.id);
+    return true;
+  }
+  return false;
+}
+
+function openConnections(stationId = player.stationId) {
+  const connections = new Map();
+  adjacency.get(stationId).forEach(({ stationId: nextId, route }) => {
+    const candidate = { station: stationById.get(nextId), route, open: isRouteOpen(route) };
+    const existing = connections.get(nextId);
+    if (!existing || (!existing.open && candidate.open)) connections.set(nextId, candidate);
+  });
+  return [...connections.values()];
+}
+
+function addLog(type, title, detail) {
+  const entry = document.createElement("div");
+  entry.className = `log-entry is-${type}`;
+  const time = document.createElement("span");
+  time.className = "log-time";
+  time.textContent = formatLogTime();
+  const marker = document.createElement("span");
+  marker.className = "log-marker";
+  const copy = document.createElement("p");
+  const heading = document.createElement("strong");
+  heading.textContent = title;
+  copy.append(heading, document.createElement("br"), document.createTextNode(detail));
+  entry.append(time, marker, copy);
+
+  const empty = eventLog.querySelector(".log-empty");
+  empty?.remove();
+  eventLog.prepend(entry);
+  while (eventLog.children.length > 35) eventLog.lastElementChild.remove();
+  updateLogCount();
+}
+
+function updateLogCount() {
+  const count = eventLog.querySelectorAll(".log-entry").length;
+  document.querySelector("#log-entry-count").textContent = `${String(count).padStart(2, "0")} ${count === 1 ? "ENTRY" : "ENTRIES"}`;
+}
+
+function showToast(message) {
+  window.clearTimeout(toastTimer);
+  toast.textContent = message;
+  toast.classList.add("is-visible");
+  toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 3400);
+}
+
+function renderLegend() {
+  const container = document.querySelector("#line-legend");
+  container.replaceChildren();
+  lineCatalog.forEach((line) => {
+    const item = document.createElement("div");
+    item.className = "legend-item";
+    const swatch = document.createElement("span");
+    swatch.className = "legend-line";
+    swatch.style.backgroundColor = line.color;
+    const label = document.createElement("span");
+    label.textContent = line.name;
+    const tag = document.createElement("small");
+    tag.textContent = line.tag;
+    item.append(swatch, label, tag);
+    container.append(item);
   });
 }
 
-function selectStation(id) {
-  if (id === journey.currentId) {
-    selectedId = null;
-    render();
+function renderRoutes() {
+  const layer = document.querySelector("#network-routes");
+  layer.replaceChildren();
+  routes.forEach((route) => {
+    const line = lineById.get(route.line);
+    const routeElement = makeSvg("path", {
+      d: routePath(route),
+      class: `rail-route${route.line === stationById.get(player.stationId).lines[0] ? " is-current-line" : ""}${isRouteOpen(route) ? "" : " is-closed"}`,
+      stroke: line.color,
+      "data-route-id": route.id,
+    });
+    const title = makeSvg("title");
+    title.textContent = `${line.name}: ${stationById.get(route.from).name} to ${stationById.get(route.to).name}${isRouteOpen(route) ? "" : " (temporarily closed)"}`;
+    routeElement.append(title);
+    layer.append(routeElement);
+  });
+}
+
+function selectDestination(stationId) {
+  const connection = openConnections().find(({ station, open }) => station.id === stationId && open);
+  if (!connection) {
+    const closed = openConnections().some(({ station, open }) => station.id === stationId && !open);
+    showToast(closed ? "That connection is temporarily closed. Try another line or wait for the signal." : "Choose a station connected to your current stop.");
     return;
   }
-  if (!neighbors.get(journey.currentId).some(({ stationId }) => stationId === id)) {
-    showToast("That station is a little farther along. Ride to a connected stop first.");
-    return;
-  }
-  selectedId = id;
+  selectedDestination = selectedDestination === stationId ? null : stationId;
   render();
 }
 
 function renderStations() {
-  stationLayer.replaceChildren();
-  const currentNeighbors = new Set(neighbors.get(journey.currentId).map(({ stationId }) => stationId));
+  const layer = document.querySelector("#network-stations");
+  layer.replaceChildren();
+  const connections = openConnections();
+  const reachable = new Set(connections.filter(({ open }) => open).map(({ station }) => station.id));
+  const blocked = new Set(connections.filter(({ open }) => !open).map(({ station }) => station.id));
 
   stations.forEach((station) => {
-    const isCurrent = station.id === journey.currentId;
-    const isReachable = currentNeighbors.has(station.id);
-    const isSelected = station.id === selectedId;
-    const classes = [
-      "station-node",
-      isCurrent && "is-current",
-      journey.visited.includes(station.id) && "is-visited",
-      isReachable && "is-reachable",
-      isSelected && "is-selected",
-    ].filter(Boolean).join(" ");
-    const node = createSvgElement("g", {
-      class: classes,
+    const current = station.id === player.stationId;
+    const selected = station.id === selectedDestination;
+    const group = makeSvg("g", {
+      class: `station-node${current ? " is-current" : ""}${reachable.has(station.id) ? " is-reachable" : ""}${blocked.has(station.id) ? " is-closed" : ""}${selected ? " is-selected" : ""}`,
       transform: `translate(${station.x} ${station.y})`,
       tabindex: "0",
       role: "button",
-      "aria-label": `${station.name}, ${station.region}${isCurrent ? ", your current station" : isReachable ? ", connected by train" : ""}`,
-      "aria-pressed": isSelected ? "true" : "false",
+      "aria-pressed": selected ? "true" : "false",
+      "aria-label": `${station.name}, ${station.jp}${current ? ", your location" : reachable.has(station.id) ? ", reachable" : blocked.has(station.id) ? ", connection closed" : ""}`,
       "data-station-id": station.id,
     });
-    node.append(createSvgElement("circle", { cx: 0, cy: 0, r: 15, class: "node-hit" }));
-    node.append(createSvgElement("circle", { cx: 0, cy: 0, r: isCurrent ? 11 : 9, class: "node-halo" }));
-    node.append(createSvgElement("circle", { cx: 0, cy: 0, r: isCurrent ? 5 : 4, class: "node-core" }));
-    const label = createSvgElement("text", {
-      x: station.label[0],
-      y: station.label[1],
+    group.append(makeSvg("circle", { cx: 0, cy: 0, r: 14, class: "station-hit" }));
+    group.append(makeSvg("circle", { cx: 0, cy: 0, r: current ? 10 : 8, class: "station-halo" }));
+    group.append(makeSvg("circle", { cx: 0, cy: 0, r: current ? 4.5 : 3.6, class: "station-core" }));
+    const label = makeSvg("text", {
+      x: station.x < 170 ? -11 : 10,
+      y: station.id === "tokyo" ? -11 : 3,
+      "text-anchor": station.x < 170 ? "end" : "start",
       class: "station-label",
     });
     label.textContent = station.name;
-    node.append(label);
-
-    const japanese = createSvgElement("text", {
-      x: station.label[0],
-      y: station.label[1] + 10,
-      class: "station-label-jp",
-    });
-    japanese.textContent = station.japanese;
-    node.append(japanese);
-    node.addEventListener("click", () => selectStation(station.id));
-    node.addEventListener("keydown", (event) => {
+    group.append(label);
+    group.addEventListener("click", () => selectDestination(station.id));
+    group.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        selectStation(station.id);
+        selectDestination(station.id);
       }
     });
-    stationLayer.append(node);
+    layer.append(group);
   });
 }
 
-function renderDetails() {
-  const station = stationById.get(selectedId ?? journey.currentId);
-  const wasVisited = journey.visited.includes(station.id);
-  const stationIndex = stations.findIndex(({ id }) => id === station.id) + 1;
-  const selectedConnection = neighbors.get(journey.currentId).find(({ stationId }) => stationId === station.id);
-  document.querySelector("#panel-kicker").textContent = station.id === journey.currentId ? "YOUR STATION" : "NEXT STATION";
-  document.querySelector("#station-number").textContent = `${String(stationIndex).padStart(2, "0")} / ${stations.length}`;
-  stationDetails.innerHTML = `
-    <div class="station-region"><span class="region-pin">${station.region === "Hokkaido" ? "✳" : "⌁"}</span>${station.region} · ${station.lines.join(" & ")}</div>
-    <h2 class="station-name">${station.name}</h2>
-    <p class="station-japanese" lang="ja">${station.japanese}</p>
-    <span class="stamp-status${wasVisited ? "" : " is-new"}">
-      <svg viewBox="0 0 14 14" aria-hidden="true"><path d="${wasVisited ? "m3 7 2.4 2.4L11 4" : "M7 2.5v9M2.5 7h9"}" /></svg>
-      ${wasVisited ? "Stamp collected" : "New stamp waiting"}
-    </span>
-    ${selectedConnection ? `<button class="selected-ride-action" id="selected-ride" type="button">Ride to ${station.name}<span aria-hidden="true">→</span></button>` : ""}
-  `;
-  if (selectedConnection) {
-    stationDetails.querySelector("#selected-ride").addEventListener("click", () => travelTo(station.id, selectedConnection.route));
-  }
-}
-
-function renderConnections() {
-  const connections = neighbors.get(journey.currentId);
-  document.querySelector("#connection-origin").textContent = `FROM ${stationById.get(journey.currentId).name.toUpperCase()}`;
-  document.querySelector("#connection-count").textContent = String(connections.length).padStart(2, "0");
-  document.querySelector("#no-connections").hidden = connections.length !== 0;
-  connectionsList.hidden = connections.length === 0;
-  connectionsList.replaceChildren();
-
-  connections.forEach(({ stationId, route }) => {
-    const station = stationById.get(stationId);
-    const isVisited = journey.visited.includes(stationId);
-    const card = document.createElement("div");
-    card.className = "connection-card";
-    const icon = document.createElement("span");
-    icon.className = "connection-icon";
-    icon.textContent = route.line === "Hokkaido" ? "❄" : route.line === "Tokaido" ? "↗" : "⌁";
-    icon.setAttribute("aria-hidden", "true");
-    const info = document.createElement("span");
-    info.className = "connection-info";
-    const name = document.createElement("strong");
+function renderDestinations() {
+  const container = document.querySelector("#destinations");
+  container.replaceChildren();
+  openConnections().forEach(({ station, route, open }) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `destination-button${selectedDestination === station.id ? " is-selected" : ""}${open ? "" : " is-blocked"}`;
+    button.style.setProperty("--route-color", lineById.get(route.line).color);
+    button.disabled = !open;
+    button.setAttribute("aria-label", `${station.name}, ${lineById.get(route.line).name}${open ? "" : ", temporarily closed"}`);
+    const dot = document.createElement("i");
+    dot.className = "destination-dot";
+    const name = document.createElement("span");
     name.textContent = station.name;
-    const detail = document.createElement("small");
-    detail.textContent = `${route.line} line · ${isVisited ? "been here" : "new stamp"}`;
-    info.append(name, detail);
-    const rideButton = document.createElement("button");
-    rideButton.className = "ride-button";
-    rideButton.type = "button";
-    rideButton.setAttribute("aria-label", `Ride to ${station.name} on the ${route.line} line`);
-    rideButton.innerHTML = 'Ride <span aria-hidden="true">→</span>';
-    rideButton.addEventListener("click", () => travelTo(stationId, route));
-    card.append(icon, info, rideButton);
-    connectionsList.append(card);
+    button.append(dot, name);
+    button.addEventListener("click", () => selectDestination(station.id));
+    container.append(button);
   });
+
+  const rideButton = document.querySelector("#ride-action");
+  const rideLabel = document.querySelector("#ride-label");
+  const rideDetail = document.querySelector("#ride-detail");
+  const selected = openConnections().find(({ station }) => station.id === selectedDestination);
+  rideButton.disabled = !selected;
+  rideLabel.textContent = selected ? `Ride to ${selected.station.name}` : "Choose your next stop";
+  rideDetail.textContent = selected ? `${lineById.get(selected.route.line).name} · direct connection` : "Tap a connected station on the map";
 }
 
-function renderStamps() {
-  const foundCount = journey.visited.length;
-  document.querySelector("#station-count").textContent = String(foundCount).padStart(2, "0");
-  document.querySelector("#station-total").textContent = String(stations.length - foundCount).padStart(2, "0");
-  document.querySelector("#stamp-count").textContent = `${foundCount} / ${stations.length} COLLECTED`;
-  document.querySelector("#stamp-subtitle").textContent = foundCount === 1 ? "— your adventure begins" : "— each one a little memory";
-  stampStrip.classList.toggle("is-empty", foundCount === 0);
-  stampStrip.replaceChildren();
-
-  stations.forEach((station) => {
-    const isFound = journey.visited.includes(station.id);
-    const card = document.createElement("div");
-    card.className = `stamp-card${isFound ? " is-found" : ""}${station.id === journey.currentId ? " is-current" : ""}`;
-    card.setAttribute("aria-label", `${station.name}: ${isFound ? "stamp collected" : "not yet discovered"}`);
-    const symbol = document.createElement("span");
-    symbol.className = "stamp-symbol";
-    symbol.textContent = isFound ? station.mark : "·";
-    const label = document.createElement("small");
-    label.textContent = station.name;
-    card.append(symbol, label);
-    stampStrip.append(card);
-  });
+function renderPlayer() {
+  const station = stationById.get(player.stationId);
+  const primaryLine = lineCatalog.find((line) => station.lines.includes(line.id));
+  document.querySelector("#player-title").innerHTML = `${station.name} <span lang="ja">${station.jp}</span>`;
+  document.querySelector("#station-overline").textContent = `${primaryLine.name.toUpperCase()} · PLATFORM ${1 + station.name.length % 6}`;
+  document.querySelector("#station-caption").textContent = station.id === "tokyo"
+    ? "The city hums around you. Where to next?"
+    : `${station.name} has a rhythm all its own. Take a breath, then wander on.`;
+  document.querySelector("#player-status").textContent = player.mood;
+  document.querySelector("#visited-count").textContent = `${String(player.visited.size).padStart(2, "0")} ${player.visited.size === 1 ? "STATION" : "STATIONS"} VISITED`;
 }
 
 function render() {
   renderRoutes();
   renderStations();
-  renderDetails();
-  renderConnections();
-  renderStamps();
+  renderDestinations();
+  renderPlayer();
 }
 
-function showToast(message) {
-  window.clearTimeout(toastTimeout);
-  window.clearTimeout(toastAnnouncementTimer);
-  toast.classList.remove("is-visible");
-  toastAnnouncementTimer = window.setTimeout(() => {
-    toast.textContent = message;
-    toast.classList.add("is-visible");
-  }, 30);
-  toastTimeout = window.setTimeout(() => toast.classList.remove("is-visible"), 4200);
-}
+function rideToSelectedStation() {
+  if (!selectedDestination) return;
+  const connection = openConnections().find(({ station, open }) => station.id === selectedDestination && open);
+  if (!connection) {
+    selectedDestination = null;
+    render();
+    showToast("That route changed. Pick another open connection.");
+    return;
+  }
 
-function travelTo(stationId, route) {
-  journey.currentId = stationId;
-  journey.lastRoute = route;
-  selectedId = null;
-  const discovered = !journey.visited.includes(stationId);
-  if (discovered) journey.visited.push(stationId);
+  const origin = stationById.get(player.stationId);
+  const line = lineById.get(connection.route.line);
+  const destination = connection.station;
+  player.stationId = destination.id;
+  player.visited.add(destination.id);
+  player.mood = `Just arrived from ${origin.name}. The city keeps unfolding.`;
+  selectedDestination = null;
   render();
-  const saved = saveJourney();
-  const station = stationById.get(stationId);
-  showToast(discovered
-    ? `All aboard! ${station.name} — your new station stamp is collected.${saved ? "" : " Your trip couldn't be saved and may be lost when you close this tab."}`
-    : `All aboard! Welcome back to ${station.name}.${saved ? "" : " Your trip couldn't be saved and may be lost when you close this tab."}`);
+  addLog("action", `Rode the ${line.name}.`, `${origin.name} → ${destination.name}. A short ride through the city.`);
+  showToast(`Next stop, ${destination.name}. The city keeps unfolding.`);
 }
 
-document.querySelector("#reset-trip").addEventListener("click", () => resetDialog.showModal());
-document.querySelector("#cancel-reset").addEventListener("click", () => resetDialog.close());
-document.querySelector("#confirm-reset").addEventListener("click", () => {
-  journey.currentId = "tokyo";
-  journey.visited = ["tokyo"];
-  journey.lastRoute = null;
-  selectedId = null;
+function lookAround() {
+  const observations = [
+    "A distant station melody drifts through the evening air.",
+    "A train slips past, windows glowing like little lanterns.",
+    "Someone has left a tiny paper crane on the bench.",
+    "The platform lights make the rails shine like ribbons.",
+    "You catch the warm smell of roasted tea from somewhere nearby.",
+  ];
+  player.mood = observations[Math.floor(Math.random() * observations.length)];
+  document.querySelector("#player-status").textContent = player.mood;
+  addLog("action", "Looked around the platform.", player.mood);
+}
+
+function findSnack() {
+  const snacks = ["warm melonpan", "a little onigiri", "yuzu soda", "sweet red-bean taiyaki", "a tiny cup of matcha"];
+  const snack = snacks[Math.floor(Math.random() * snacks.length)];
+  player.snacks += 1;
+  player.mood = `Enjoying ${snack}. A perfect little platform pause.`;
+  document.querySelector("#player-status").textContent = player.mood;
+  addLog("action", `Found ${snack}.`, "A konbini detour well spent. The journey can wait a moment.");
+  showToast(`You found ${snack}. A perfect little platform pause.`);
+}
+
+function availableConnections(stationId = player.stationId) {
+  return openConnections(stationId).filter(({ open }) => open);
+}
+
+function triggerIncident() {
+  const now = Date.now();
+  [...closures].forEach(([routeId, expiresAt]) => {
+    if (expiresAt <= now) {
+      closures.delete(routeId);
+      const route = routeById.get(routeId);
+      const line = lineById.get(route.line);
+      addLog("action", `${line.name} connection restored.`, `Service is back between ${stationById.get(route.from).name} and ${stationById.get(route.to).name}.`);
+    }
+  });
+
+  const incidentType = Math.random();
+  if (incidentType < 0.64) {
+    const candidates = routes.filter((route) => isRouteOpen(route));
+    if (!candidates.length) return;
+    const route = candidates[Math.floor(Math.random() * candidates.length)];
+    const line = lineById.get(route.line);
+    const duration = 28 + Math.floor(Math.random() * 18);
+    const expiresAt = now + duration * 1000;
+    closures.set(route.id, expiresAt);
+    const currentAffected = player.stationId === route.from || player.stationId === route.to;
+    if (selectedDestination && [route.from, route.to].includes(player.stationId) &&
+      [route.from, route.to].includes(selectedDestination)) {
+      selectedDestination = null;
+    }
+    render();
+    addLog("incident", "A signal check is underway.", `${line.name} is paused between ${stationById.get(route.from).name} and ${stationById.get(route.to).name}. ${currentAffected ? "Choose another open connection or wait a little." : `Expected to clear in about ${duration} seconds.`}`);
+    showToast(`${line.name} has a brief signal check. The map shows the closed connection.`);
+    const timer = window.setTimeout(() => {
+      if (closures.get(route.id) !== expiresAt) return;
+      closures.delete(route.id);
+      closureTimers.delete(route.id);
+      render();
+      addLog("action", `${line.name} connection restored.`, `Service is back between ${stationById.get(route.from).name} and ${stationById.get(route.to).name}.`);
+    }, duration * 1000);
+    closureTimers.set(route.id, timer);
+    return;
+  }
+
+  const options = availableConnections();
+  if (!options.length) {
+    addLog("incident", "Platform reassignment.", "A station announcement shifts your train to the nearest available platform. Your location stays put while services recover.");
+    showToast("A platform change was announced, but all nearby routes are paused.");
+    return;
+  }
+  const previous = stationById.get(player.stationId);
+  const connection = options[Math.floor(Math.random() * options.length)];
+  player.stationId = connection.station.id;
+  player.visited.add(player.stationId);
+  player.mood = "A last-minute platform change brought you somewhere new.";
+  selectedDestination = null;
   render();
-  resetDialog.close();
-  const saved = saveJourney();
-  showToast(`Fresh ticket, fresh tracks. Tokyo is ready when you are.${saved ? "" : " This reset couldn't be saved and may not persist."}`);
+  addLog("incident", "Platform change — please mind the gap.", `A service reassignment carries you from ${previous.name} to ${connection.station.name}. It wasn't on the plan, but it's part of the story.`);
+  showToast(`Surprise stop: ${connection.station.name}. The railway has other ideas.`);
+}
+
+function scheduleIncident() {
+  const delay = 18000 + Math.floor(Math.random() * 14000);
+  incidentTimer = window.setTimeout(() => {
+    if (Math.random() < 0.56) triggerIncident();
+    scheduleIncident();
+  }, delay);
+}
+
+function renderInitialClock() {
+  makeClockTicks();
+  updateClock();
+  window.setInterval(updateClock, 1000);
+}
+
+document.querySelector("#ride-action").addEventListener("click", rideToSelectedStation);
+document.querySelector("#look-action").addEventListener("click", lookAround);
+document.querySelector("#snack-action").addEventListener("click", findSnack);
+document.querySelector("#clear-log").addEventListener("click", () => {
+  eventLog.replaceChildren();
+  const empty = document.createElement("p");
+  empty.className = "log-empty";
+  empty.textContent = "A fresh page. Your next little moment will appear here.";
+  eventLog.append(empty);
+  addLog("action", "Journey log cleared.", "Your current location and adventure continue.");
+  updateLogCount();
 });
-resetDialog.addEventListener("click", (event) => {
-  if (event.target === resetDialog) resetDialog.close();
+document.querySelector("#restart-button").addEventListener("click", () => {
+  window.clearTimeout(incidentTimer);
+  closureTimers.forEach((timer) => window.clearTimeout(timer));
+  closureTimers.clear();
+  closures.clear();
+  player.stationId = "tokyo";
+  player.visited = new Set(["tokyo"]);
+  player.snacks = 0;
+  player.mood = "A ticket, a little time, and nowhere in particular.";
+  selectedDestination = null;
+  eventLog.replaceChildren();
+  render();
+  addLog("action", "A fresh day in Tokyo.", "You find yourself at Tokyo Station, platform 9. The city is waiting.");
+  showToast("A fresh day in Tokyo. Platform 9 is ready when you are.");
+  scheduleIncident();
 });
 
+renderLegend();
+renderInitialClock();
 render();
+const welcomeTime = eventLog.querySelector(".welcome-entry .log-time");
+if (welcomeTime) welcomeTime.textContent = formatLogTime();
+updateLogCount();
+scheduleIncident();

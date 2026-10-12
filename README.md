@@ -1,6 +1,6 @@
-# Platform 9 — A little Japan rail adventure
+# Tokyo Afterglow
 
-A small, no-build browser game about wandering a simplified Japanese rail map, taking short train rides, and collecting station stamps along the way.
+A small Tokyo-only railway platform adventure. Explore a simplified network, choose an adjacent station, and make a few little memories along the way. An original anime-inspired evening platform illustration is embedded in the page; the app does not need image or font services to run.
 
 ## Run it
 
@@ -14,8 +14,10 @@ Then visit <http://localhost:8000>.
 
 ## How to play
 
-- Start in Tokyo and choose one of the connected stations from the map or the **Next stops** list.
-- Ride one station at a time; every new stop earns a station stamp.
-- Your current station and stamps are saved in your browser. Use **Start over** to clear your collection and return to Tokyo.
+- The left panel is a simplified Tokyo rail map. Select a connected station, then choose **Ride** in the center panel.
+- **Look around** and **Find a snack** add small moments to your journey log.
+- The clock displays real-world Tokyo time (JST) in 24-hour format.
+- Random service incidents may temporarily close a route or send you to a nearby station. Closed routes are marked on the map and reopen automatically.
+- Use **Reset day** to return to Tokyo and begin a fresh adventure. **Clear** only clears the event log.
 
-This is a playful, simplified map. It does not show real timetables, fares, or exact operating routes. The fonts are loaded from Google Fonts when a network connection is available; the app still works with system fonts offline.
+This is a fictional, simplified city network and does not represent actual timetables, fares, or service status.
